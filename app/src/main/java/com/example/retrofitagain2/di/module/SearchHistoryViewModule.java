@@ -11,19 +11,19 @@ import dagger.Provides;
 @Module
 public class SearchHistoryViewModule {
 
-    private final SearchHistoryView searchHistoryView;
+    private final SearchHistoryView view;
 
-    public SearchHistoryViewModule(SearchHistoryView searchHistoryView) {
-        this.searchHistoryView = searchHistoryView;
+    public SearchHistoryViewModule(SearchHistoryView view) {
+        this.view = view;
     }
 
     @Provides
     SearchHistoryView provideSearchHistoryView() {
-        return searchHistoryView;
+        return view;
     }
 
     @Provides
-    SearchHistoryPresenter provideSearchHistoryPresenter(SearchHistoryService searchHistoryService, SearchHistoryView searchHistoryView) {
-        return new SearchHistoryPresenterImpl(searchHistoryService, searchHistoryView);
+    SearchHistoryPresenter provideSearchHistoryPresenter(SearchHistoryService searchHistoryService, SearchHistoryView view) {
+        return new SearchHistoryPresenterImpl(searchHistoryService, view);
     }
 }

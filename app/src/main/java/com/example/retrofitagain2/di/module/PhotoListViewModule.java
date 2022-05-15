@@ -13,19 +13,19 @@ import dagger.Provides;
 @Module
 public class PhotoListViewModule {
 
-    private final PhotoListView photoListView;
+    private final PhotoListView view;
 
-    public PhotoListViewModule(PhotoListActivity photoListView) {
-        this.photoListView = photoListView;
+    public PhotoListViewModule(PhotoListActivity view) {
+        this.view = view;
     }
 
     @Provides
     PhotoListView providePhotoListView() {
-        return photoListView;
+        return view;
     }
 
     @Provides
-    PhotoListPresenter providePhotoListPresenter(PhotosService photoService, SearchHistoryService searchHistoryService, PhotoListView photoListView) {
-        return new PhotoListPresenterImpl(photoService, searchHistoryService, photoListView);
+    PhotoListPresenter providePhotoListPresenter(PhotosService photoService, SearchHistoryService searchHistoryService, PhotoListView view) {
+        return new PhotoListPresenterImpl(photoService, searchHistoryService, view);
     }
 }

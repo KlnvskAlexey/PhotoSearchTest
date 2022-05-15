@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Photo search</string>
+    <string name="history">History</string>
 </resources>

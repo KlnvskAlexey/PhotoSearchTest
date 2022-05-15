@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.retrofitagain2.*;
+import com.example.retrofitagain2.R;
 
 public class PhotoDetailsActivity extends AppCompatActivity {
 

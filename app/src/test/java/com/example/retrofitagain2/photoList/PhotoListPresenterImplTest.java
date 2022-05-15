@@ -1,51 +1,71 @@
 package com.example.retrofitagain2.photoList;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.graphics.Bitmap;
 
-import com.example.retrofitagain2.services.PhotosServiceImpl;
-import com.example.retrofitagain2.services.SearchHistoryServiceImpl;
+import com.example.retrofitagain2.PhotosServiceListener;
+import com.example.retrofitagain2.services.PhotosService;
+import com.example.retrofitagain2.services.SearchHistoryService;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class PhotoListPresenterImplTest {
+    @Mock
+    PhotosService photosService;
+    @Mock
+    SearchHistoryService searchHistoryService;
+    @Mock
+    PhotoListView photoListView;
+    PhotoListPresenterImpl photoListPresenter;
 
-    PhotosServiceImpl photosService = Mockito.mock(PhotosServiceImpl.class);
-    SearchHistoryServiceImpl searchHistoryService = Mockito.mock(SearchHistoryServiceImpl.class);
-    PhotoListActivity photoListActivity = Mockito.mock(PhotoListActivity.class);
-    PhotoListPresenterImpl photoListPresenter = new PhotoListPresenterImpl(photosService, searchHistoryService, photoListActivity);
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+        this.photoListPresenter = new PhotoListPresenterImpl(photosService, searchHistoryService, photoListView);
+    }
+
+    @AfterEach
+    void afterEach() {
+        reset(photosService);
+        reset(searchHistoryService);
+        reset(photoListView);
+    }
 
     @Test
-    void TestOnHandleSearchHistoryButtonClick() {
-        Assertions.assertNotNull(photoListPresenter);
+    void HandleSearchHistoryButtonClickTest() {
         photoListPresenter.handleHistoryButtonClick();
-        Mockito.verify(photoListActivity, Mockito.times(1)).showSearchHistoryActivity();
+        verify(photoListView, times(1)).showSearchHistoryActivity();
     }
 
     @Test
-    void TestOnHandleSearchViewQuery() {
-        Assertions.assertNotNull(photoListPresenter);
-        photoListPresenter.handleSearchViewQuery(Mockito.anyString());
-        Mockito.verify(searchHistoryService, Mockito.times(1)).addHistoryQuery(Mockito.anyString());
-        Mockito.verify(photoListActivity, Mockito.times(1)).showProgressBar();
-        Mockito.verify(photoListActivity, Mockito.times(1)).showToast(Mockito.anyString());
-        Mockito.verify(photosService, Mockito.times(1)).fetchPhotosByQuery(Mockito.anyString(), Mockito.any());
+    void HandleSearchViewQueryTest() {
+        photoListPresenter.handleSearchViewQuery(anyString());
+        verify(searchHistoryService, times(1)).addHistoryQuery(anyString());
+        verify(photoListView, times(1)).showProgressBar();
+        verify(photoListView, times(1)).showToast(anyString());
+        verify(photosService, times(1)).fetchPhotosByQuery(anyString(), any(PhotosServiceListener.class));
     }
 
     @Test
-    void TestOnHandleDownloadButtonClick() {
-        Assertions.assertNotNull(photoListPresenter);
-        photoListPresenter.handleDownloadButtonClick(Mockito.anyString(), Mockito.anyString());
-        Mockito.verify(photosService, Mockito.times(1)).loadPhotosByQuery(Mockito.anyString(), Mockito.anyString());
+    void HandleDownloadButtonClickTest() {
+        photoListPresenter.handleDownloadButtonClick(anyString(), anyString());
+        verify(photosService, times(1)).loadPhotosByQuery(anyString(), anyString());
     }
 
     @Test
-    void TestOnHandleImageButtonClick() {
-        Assertions.assertNotNull(photoListPresenter);
-        photoListPresenter.handleImageButtonClick(Mockito.mock(Bitmap.class));
-        Mockito.verify(photoListActivity, Mockito.times(1)).hideKeyboard();
-        Mockito.verify(photoListActivity, Mockito.times(1)).showPhotoDetailsActivity(Mockito.any());
+    void HandleImageButtonClickTest() {
+        photoListPresenter.handleImageButtonClick(mock(Bitmap.class));
+        verify(photoListView, times(1)).hideKeyboard();
+        verify(photoListView, times(1)).showPhotoDetailsActivity(any());
     }
 }

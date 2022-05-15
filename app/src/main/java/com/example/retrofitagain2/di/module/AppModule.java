@@ -14,14 +14,16 @@ import dagger.Provides;
 public class AppModule {
 
     private final Context context;
+    private final PhotosServiceImpl photosService;
 
     public AppModule(Context applicationContext) {
         this.context = applicationContext;
+        this.photosService = new PhotosServiceImpl(context);
     }
 
     @Provides
     PhotosService providePhotosService() {
-        return new PhotosServiceImpl(context);
+        return photosService;
     }
 
     @Provides

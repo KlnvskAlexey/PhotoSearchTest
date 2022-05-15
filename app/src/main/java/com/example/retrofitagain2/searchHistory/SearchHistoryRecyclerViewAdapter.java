@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.retrofitagain2.*;
+import com.example.retrofitagain2.R;
 
 import java.util.ArrayList;
 

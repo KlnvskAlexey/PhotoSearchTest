@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.retrofitagain2.Application;
 import com.example.retrofitagain2.BaseActivity;
-import com.example.retrofitagain2.*;
+import com.example.retrofitagain2.R;
 import com.example.retrofitagain2.di.components.DaggerSearchHistoryViewComponent;
 import com.example.retrofitagain2.di.module.SearchHistoryViewModule;
 
